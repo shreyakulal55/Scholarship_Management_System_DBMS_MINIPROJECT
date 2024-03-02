@@ -1,0 +1,307 @@
+Frontend (ReactJS):
+1. Set Up React App:
+bash
+Copy code
+# Inside the frontend directory
+npx create-react-app scholarship-portal
+cd scholarship-portal
+npm install react-router-dom
+npm start
+2. Create Components:
+Create components for StudentDashboard.js, FacultyDashboard.js, ScholarshipDetails.js, ApplyScholarshipForm.js, UpdateStatusForm.js, and Login.js inside the src/components directory.
+
+3. Create Service Files:
+Create api.js and auth.js inside the src/services directory.
+
+4. Set Up Routes:
+Configure routes in routes.js inside the src directory.
+
+5. Implement App Component:
+Replace the content of src/App.js and src/index.js with the appropriate content.
+
+6. Style Your Components:
+Style your components using CSS. You can use a separate styles.css file or include styles within your component files.
+
+Conclusion:
+The above steps provide a basic structure for a scholarship management system using ReactJS for the frontend, Node.js (Express) for the backend, and MySQL for the database. You'll need to fill in the details for each file, implementing CRUD operations, connecting frontend components to backend API calls, and adding necessary logic for your application's specific requirements.
+
+
+please provide complete code
+
+
+CREATE TABLE Faculty (
+  F_id VARCHAR(5) PRIMARY KEY,
+  F_Name VARCHAR(25) NOT NULL,
+  F_Phone VARCHAR(12) NOT NULL
+);
+
+
+CREATE TABLE Student (
+  USN VARCHAR(10) PRIMARY KEY,
+  S_Name VARCHAR(25) NOT NULL,
+  Gender VARCHAR(10) NOT NULL,
+  Caste VARCHAR(25) NOT NULL,
+  Income DECIMAL(10, 2) NOT NULL,
+  Email VARCHAR(25) NOT NULL
+);
+
+
+
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 52
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> drop table faculty;
+ERROR 1046 (3D000): No database selected
+mysql> use scholarship_portal;
+Database changed
+mysql> drop table faculty;
+ERROR 1051 (42S02): Unknown table 'scholarship_portal.faculty'
+mysql> drop table faculties
+    -> ;
+ERROR 3730 (HY000): Cannot drop table 'faculties' referenced by a foreign key constraint 'updates_ibfk_2' on table 'updates'.
+mysql> drop table updates;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> drop table faculties
+    -> ;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> CREATE TABLE Faculty (
+    ->   F_id INT PRIMARY KEY,
+    ->   F_Name VARCHAR(255) NOT NULL,
+    ->   F_Phone VARCHAR(15) NOT NULL
+    ->
+    ->
+    ->
+    -> ^C
+mysql> CREATE TABLE Faculty (
+    ->   F_id VARCHAR(5) PRIMARY KEY,
+    ->   F_Name VARCHAR(25) NOT NULL,
+    ->   F_Phone VARCHAR(12) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> drop table students;
+ERROR 3730 (HY000): Cannot drop table 'students' referenced by a foreign key constraint 'applications_ibfk_1' on table 'applications'.
+mysql> drop table applications
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table students;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Student (
+    ->   USN VARCHAR(10) PRIMARY KEY,
+    ->   S_Name VARCHAR(25) NOT NULL,
+    ->   Gender VARCHAR(10) NOT NULL,
+    ->   Caste VARCHAR(25) NOT NULL,
+    ->   Income DECIMAL(10, 2) NOT NULL,
+    ->   S_Phone VARCHAR(15),
+    ->   Email VARCHAR(25) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert value into Faculty('F018','ROOPA','1234567890');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'into Faculty('F018','ROOPA','1234567890')' at line 1
+mysql> INSERT INTO Faculty (F_id, F_Name, F_Phone) VALUES ('F018', 'ROOPA', '1234567890');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO Student (USN, S_Name, Gender, Caste, Income, Email)
+    -> VALUES ('4sf21ad050', 'Shreya', 'female', 'Kulal', 20000, 'shreyakulal55@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> DESCRIBE Student;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| USN    | varchar(10)   | NO   | PRI | NULL    |       |
+| S_Name | varchar(25)   | NO   |     | NULL    |       |
+| Gender | varchar(10)   | NO   |     | NULL    |       |
+| Caste  | varchar(25)   | NO   |     | NULL    |       |
+| Income | decimal(10,2) | NO   |     | NULL    |       |
+| Email  | varchar(25)   | NO   |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> DESCRIBE Faculty;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| F_id    | varchar(5)  | NO   | PRI | NULL    |       |
+| F_Name  | varchar(25) | NO   |     | NULL    |       |
+| F_Phone | varchar(12) | NO   |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++------------+--------+--------+-------+----------+-------------------------+
+| USN        | S_Name | Gender | Caste | Income   | Email                   |
++------------+--------+--------+-------+----------+-------------------------+
+| 4sf21ad050 | Shreya | female | Kulal | 20000.00 | shreyakulal55@gmail.com |
++------------+--------+--------+-------+----------+-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Faculty WHERE F_Name = ? AND F_id = ?;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '? AND F_id = ?' at line 1
+mysql> SELECT * FROM Faculty WHERE F_Name = ROOPA AND F_id=F018;
+ERROR 1054 (42S22): Unknown column 'ROOPA' in 'where clause'
+mysql> SELECT * FROM FACULTY;
++------+--------+------------+
+| F_id | F_Name | F_Phone    |
++------+--------+------------+
+| F018 | ROOPA  | 1234567890 |
++------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Faculty WHERE F_Name = 'ROOPA' AND F_id='F018';
++------+--------+------------+
+| F_id | F_Name | F_Phone    |
++------+--------+------------+
+| F018 | ROOPA  | 1234567890 |
++------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> SHOW GRANTS FOR 'shreya'@'localhost';
+ERROR 1141 (42000): There is no such grant defined for user 'shreya' on host 'localhost'
+mysql> GRANT ALL PRIVILEGES ON scholarship_portal.* TO 'shreya'@'localhost' IDENTIFIED BY 'shreya@K55';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IDENTIFIED BY 'shreya@K55'' at line 1
+mysql> GRANT ALL PRIVILEGES ON scholarship_portal.* TO 'shreya'@'localhost';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> GRANT GRANT OPTION ON *.* TO 'shreya'@'localhost';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> GRANT ALL PRIVILEGES ON scholarship_portal.* TO 'shreya'@'localhost';
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> SELECT user, host, authentication_string FROM mysql.user WHERE user = 'shreya';
++--------+------+-------------------------------------------+
+| user   | host | authentication_string                     |
++--------+------+-------------------------------------------+
+| shreya | %    | *A4B6157319038724E3560894F7F932C8886EBFCF |
++--------+------+-------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT USER();
++----------------+
+| USER()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql>
+
+mysql> SHOW GRANTS FOR 'shreya'@'localhost';
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for shreya@localhost
+
+
+                   |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE, CREATE ROLE, DROP ROLE ON *.* TO `shreya`@`localhost` |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'shreya'@'localhost' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'shreya'@'%' WITH GRANT OPTION;
+ERROR 1410 (42000): You are not allowed to create a user with GRANT
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SET PASSWORD FOR 'shreya'@'localhost' = PASSWORD('shreya');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PASSWORD('shreya')' at line 1
+mysql> SET PASSWORD FOR 'shreya'@'localhost' = 'shreya';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+
+
+CREATE TABLE Faculty (
+  F_id VARCHAR(5) PRIMARY KEY,
+  F_Name VARCHAR(25) NOT NULL,
+  F_Phone VARCHAR(12) NOT NULL
+);
+
+
+CREATE TABLE Student (
+  USN VARCHAR(10) PRIMARY KEY,
+  S_Name VARCHAR(25) NOT NULL,
+  Gender VARCHAR(10) NOT NULL,
+  Caste VARCHAR(25) NOT NULL,
+  Income DECIMAL(10, 2) NOT NULL,
+S_Phone VARCHAR(15),
+  Email VARCHAR(25) NOT NULL
+);
+
+
+
+CREATE TABLE Agency (
+    AID INT PRIMARY KEY,
+    ScholarshipName VARCHAR(25),
+    Type VARCHAR(20)
+);
+ALTER TABLE Student
+ADD COLUMN S_Phone VARCHAR(15);
+
+
+CREATE TABLE Scholarships (
+    S_Id INT PRIMARY KEY,
+    F_Id INT PRIMARY KEY,
+    ScholarshipName VARCHAR(25),
+    Start_Date DATE,
+    Deadline DATE,
+    Amount DECIMAL(10, 2),
+    AID INT,
+    ApplyLink VARCHAR(100), 
+    FOREIGN KEY (F_Id) REFERENCES Faculty(F_Id),
+    FOREIGN KEY (ScholarshipName) REFERENCES Agency(ScholarshipName),
+    FOREIGN KEY (AID) REFERENCES Agency(AID)
+);
+
+CREATE TABLE Apply (
+    USN VARCHAR(10),
+    S_ID INT,
+    Year INT,
+    ApplyDate DATE,
+    Status VARCHAR(20),
+    PRIMARY KEY (USN, S_ID),
+    FOREIGN KEY (USN) REFERENCES Student(USN),
+    FOREIGN KEY (S_ID) REFERENCES Scholarships(S_ID)
+);
+
+
+CREATE TABLE Provides (
+    S_ID INT,
+    AID INT,
+    Provided_Year INT,
+    PRIMARY KEY (S_ID, AID),
+    FOREIGN KEY (S_ID) REFERENCES Scholarships(S_ID),
+    FOREIGN KEY (AID) REFERENCES Agency(AID)
+);
+
+
+
+
+
+INSERT INTO APPLY (USN, S_Id, Year, ApplyDate, Status)
+VALUES ('4sf21ad050', 1, 2024, '2024-03-13', 'YES');
+
+
+
+INSERT INTO PROVIDES (S_Id, AID, Provided_Year)
+VALUES (1, 1, 2024);
+
+
