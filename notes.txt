@@ -258,8 +258,8 @@ ADD COLUMN S_Phone VARCHAR(15);
 
 
 CREATE TABLE Scholarships (
-    S_Id INT PRIMARY KEY,
-    F_Id INT PRIMARY KEY,
+    S_Id INT AUTO_INCREMENT PRIMARY KEY,
+    F_Id varchar(5),
     ScholarshipName VARCHAR(25),
     Start_Date DATE,
     Deadline DATE,
@@ -268,7 +268,7 @@ CREATE TABLE Scholarships (
     ApplyLink VARCHAR(100), 
     FOREIGN KEY (F_Id) REFERENCES Faculty(F_Id),
     FOREIGN KEY (ScholarshipName) REFERENCES Agency(ScholarshipName),
-    FOREIGN KEY (AID) REFERENCES Agency(AID)
+    FOREIGN KEY (AID) REFERENCES Agency(AID)
 );
 
 CREATE TABLE Apply (
@@ -305,3 +305,12 @@ INSERT INTO PROVIDES (S_Id, AID, Provided_Year)
 VALUES (1, 1, 2024);
 
 
+select * from faculty;
+
+select * from agency;
+
+select * from apply;
+
+select * from provides;
+select * from scholarships;
+select * from student;

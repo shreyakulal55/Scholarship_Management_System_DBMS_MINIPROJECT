@@ -5,9 +5,8 @@ const dotenv = require('dotenv');
 const mysql = require('mysql');  // Import the MySQL module
 const studentRoutes = require('./routes/studentRoutes');  // Import studentRoutes
 const facultyRoutes = require('./routes/facultyRoutes');  // Import facultyRoutes
-const scholarshipRoutes = require('./routes/scholarshipRoutes');  // Import scholarshipRoutes
-const applicationRoutes = require('./routes/applicationRoutes');  // Import applicationRoutes
 const updatesRoutes = require('./routes/updatesRoutes');  // Import updatesRoutes
+const scholarshipRoutes = require('./routes/scholarshipRoutes'); // Include scholarshipRoutes
 dotenv.config();
 
 const app = express();
@@ -37,10 +36,8 @@ db.connect((err) => {
 // Use routes
 app.use('/api/students', studentRoutes);
 app.use('/api/faculties', facultyRoutes);
-app.use('/api/scholarships', scholarshipRoutes);
-app.use('/api/applications', applicationRoutes);
 app.use('/api/updates', updatesRoutes);
-
+app.use('/api/scholarships', scholarshipRoutes); // Use the correct route
 // Login endpoint
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
@@ -70,6 +67,22 @@ app.post('/api/login', (req, res) => {
           res.status(401).json({ error: 'Invalid credentials' });  // Return error as JSON
         }
       });
+    }
+  });
+});
+
+// Endpoint to insert values into the Agency table
+app.post('/api/agency', (req, res) => {
+  const { AID, ScholarshipName, Type } = req.body;
+
+  const sql = 'INSERT INTO Agency (AID, ScholarshipName, Type) VALUES (?, ?, ?)';
+  db.query(sql, [AID, ScholarshipName, Type], (err, result) => {
+    if (err) {
+      console.error('Error inserting data into Agency table:', err);
+      res.status(500).json({ error: 'Error adding scholarship data to Agency table' });
+    } else {
+      console.log('Data added to Agency table successfully');
+      res.status(200).json({ message: 'Scholarship data added successfully' });
     }
   });
 });

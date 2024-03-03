@@ -1,4 +1,3 @@
-// controllers/scholarshipController.js
 const scholarshipModel = require('../models/scholarshipModel');
 
 // Get all scholarships

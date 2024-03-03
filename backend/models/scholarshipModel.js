@@ -1,4 +1,3 @@
-// models/scholarshipModel.js
 const db = require('./db');
 
 // Get all scholarships
