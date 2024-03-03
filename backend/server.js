@@ -7,6 +7,9 @@ const studentRoutes = require('./routes/studentRoutes');  // Import studentRoute
 const facultyRoutes = require('./routes/facultyRoutes');  // Import facultyRoutes
 const updatesRoutes = require('./routes/updatesRoutes');  // Import updatesRoutes
 const scholarshipRoutes = require('./routes/scholarshipRoutes'); // Include scholarshipRoutes
+
+const agencyRoutes = require('./routes/agencyRoutes');
+
 dotenv.config();
 
 const app = express();
@@ -38,6 +41,8 @@ app.use('/api/students', studentRoutes);
 app.use('/api/faculties', facultyRoutes);
 app.use('/api/updates', updatesRoutes);
 app.use('/api/scholarships', scholarshipRoutes); // Use the correct route
+app.use('/api/agencies', agencyRoutes); // Use the correct route
+
 // Login endpoint
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
@@ -71,21 +76,6 @@ app.post('/api/login', (req, res) => {
   });
 });
 
-// Endpoint to insert values into the Agency table
-app.post('/api/agency', (req, res) => {
-  const { AID, ScholarshipName, Type } = req.body;
-
-  const sql = 'INSERT INTO Agency (AID, ScholarshipName, Type) VALUES (?, ?, ?)';
-  db.query(sql, [AID, ScholarshipName, Type], (err, result) => {
-    if (err) {
-      console.error('Error inserting data into Agency table:', err);
-      res.status(500).json({ error: 'Error adding scholarship data to Agency table' });
-    } else {
-      console.log('Data added to Agency table successfully');
-      res.status(200).json({ message: 'Scholarship data added successfully' });
-    }
-  });
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
